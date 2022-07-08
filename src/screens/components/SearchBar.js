@@ -2,7 +2,7 @@ import React from "react";
 import { View, TextInput, StyleSheet } from "react-native";
 import { Feather } from "@expo/vector-icons"; //this is how to import vector-icons lib
 
-const SearchBar = ({ term, onTermChange }) => {
+const SearchBar = ({ term, onTermChange, onTermSubmit }) => {
   return (
     <View style={styles.backgroundStyle}>
       <Feather name="search" style={styles.iconStyle} />
@@ -13,8 +13,11 @@ const SearchBar = ({ term, onTermChange }) => {
         style={styles.inputStyle}
         placeholder="Search"
         value={term}
-        onChangeText={(newTerm) => onTermChange(newTerm)}
+        onChangeText={onTermChange}
         //same as onChange
+        onEndEditing={onTermSubmit} 
+        //For when user hits enter button
+        //We want to show search results only when user hits enter.
       />
     </View>
   );
