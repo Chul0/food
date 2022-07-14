@@ -1,33 +1,46 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import SearchBar from "./components/SearchBar";
 import yelp from "../api/yelp";
-//import api env here
 
-const SearchScreen = () => {
+const SearchScreen = (searchTerm) => {
 	const [term, setTerm] = useState("");
-	const [results, setResults] = useState([]); //if you look at the yelp api doc, the response body will is in an array, hence useState should be [] array.
+	const [results, setResults] = useState([]);
+	const [errorMessage, setErrorMessage] = useState("");
 
-	const searchApi = async () => {
-		const response = await yelp.get("/search", {
-			params: {
-				//if you add params it will automatically add to the end of the params like .. e.g., '/search?limit=50'
-				limit: 50,
-				term, //es15 syntax same as term:term
-				location: "san jose",
-			},
-		});
-		setResults(response.data.businesses);
+	const searchApi = async (searchTerm) => {
+		try {
+			//for Error handling
+			const response = await yelp.get("/search", {
+				params: {
+					limit: 50,
+					term: searchTerm,
+					location: "san jose",
+				},
+			});
+			setResults(response.data.businesses);
+		} catch (err) {
+			console.log(err);
+			setErrorMessage("Something went wrong"); //if err occurs, print this message
+		}
 	};
+
+	//Call searchApi when component is first rendered.
+	//BAD CODE! because it will fire this function multiple times.
+	// searchApi("pasta");
+
+	useEffect(() => {
+		searchApi("pasta"); //Run this once when this cmp is first rendered
+	}, []); //re run every time this changes.
 
 	return (
 		<View>
 			<SearchBar
 				term={term}
 				onTermChange={setTerm}
-				onTermSubmit={searchApi} //passing a reference that should be invoked
+				onTermSubmit={() => searchApi(term)} //need an arrow to pass arg
 			/>
-			<Text>Search Screen</Text>
+			{errorMessage ? <Text>{errorMessage}</Text> : null}
 			<Text>We have found {results.length}</Text>
 		</View>
 	);
