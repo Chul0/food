@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import SearchBar from "./components/SearchBar";
 import useResults from "../hooks/useResults";
+import ResultsList from "./components/ResultsList";
 
 const SearchScreen = (searchTerm) => {
 	const [term, setTerm] = useState("");
-	const [searchApi, results, errorMessage] = useResults(); //these are going to come from calling useResults.
+	const [searchApi, results, errorMessage] = useResults();
 
 	return (
 		<View>
@@ -16,6 +17,9 @@ const SearchScreen = (searchTerm) => {
 			/>
 			{errorMessage ? <Text>{errorMessage}</Text> : null}
 			<Text>We have found {results.length}</Text>
+			<ResultsList />
+			<ResultsList />
+			<ResultsList />
 		</View>
 	);
 };
