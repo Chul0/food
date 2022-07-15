@@ -15,7 +15,8 @@ const SearchScreen = (searchTerm) => {
 	};
 
 	return (
-		<View>
+		<View style={{ flex: 1 }}>
+			{/* Only use the screen that's available  */}
 			<SearchBar
 				term={term}
 				onTermChange={setTerm}
@@ -24,6 +25,7 @@ const SearchScreen = (searchTerm) => {
 			{errorMessage ? <Text>{errorMessage}</Text> : null}
 			<Text>We have found {results.length}</Text>
 			<ScrollView>
+				{/* Good practice to add scroll view so smaller device user can see too */}
 				<ResultsList
 					results={filterResultsByPrice("$")}
 					title="Cost Effective"
