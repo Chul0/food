@@ -1,17 +1,19 @@
 import React from "react";
 import { View, Text, StyleSheet, FlatList } from "react-native";
+import ResultsDetail from "./ResultsDetail";
 
 const ResultsList = ({ title, results }) => {
 	return (
-		<View>
+		<View style={styles.container}>
 			<Text style={styles.title}>{title}</Text>
 			<FlatList
-				horizontal //same as horizontal={true} //by default, it renders vertically
+				horizontal
+				showsHorizontalScrollIndicator={false} //you can hide scroll bar
 				data={results}
-				keyExtractor={(result) => result.id} //it will map through whatever you pass in 'data' prop. 'results' in this case
+				keyExtractor={(result) => result.id}
 				renderItem={({ item }) => {
-					//it has two properties:index, item. basically item is an object of 'results'
-					return <Text>{item.name}</Text>;
+					return <ResultsDetail result={item} />;
+					//Replace <Text> with this reusable component for single result detaail.
 				}}
 			/>
 		</View>
@@ -22,6 +24,11 @@ const styles = StyleSheet.create({
 	title: {
 		fontSize: 18,
 		fontWeight: "bold",
+		marginLeft: 15,
+		marginBottom: 5,
+	},
+	container: {
+		marginBottom: 10,
 	},
 });
 

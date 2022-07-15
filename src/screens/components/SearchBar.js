@@ -6,7 +6,6 @@ const SearchBar = ({ term, onTermChange, onTermSubmit }) => {
 	return (
 		<View style={styles.backgroundStyle}>
 			<Feather name="search" style={styles.iconStyle} />
-			{/* How to add vector-icons */}
 			<TextInput
 				autoCapitalize="none"
 				autoCorrect={false}
@@ -14,10 +13,7 @@ const SearchBar = ({ term, onTermChange, onTermSubmit }) => {
 				placeholder="Search"
 				value={term}
 				onChangeText={onTermChange}
-				//same as onChange
 				onEndEditing={onTermSubmit}
-				//For when user hits enter button
-				//We want to show search results only when user hits enter.
 			/>
 		</View>
 	);
@@ -38,7 +34,7 @@ const styles = StyleSheet.create({
 	},
 	iconStyle: {
 		fontSize: 35,
-		alignSelf: "center", //to position Search icon to the center
+		alignSelf: "center",
 		marginHorizontal: 15,
 	},
 });
